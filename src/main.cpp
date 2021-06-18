@@ -1,9 +1,8 @@
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
 #include <Arduino.h>
 
-/*
- Jaka licencje na ten soft? 
-
-*/
 
 int pompa = 6;                                  // Pin do przekaznika
 int dioda = 13;                                 // Dioda testowa
