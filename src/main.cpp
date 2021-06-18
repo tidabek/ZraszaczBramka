@@ -75,6 +75,6 @@ void loop() {
   if(sekwencja == 2){
     set_pompa();
   }
-
+  // wylacz pompke
   reset_pompa();
 }
