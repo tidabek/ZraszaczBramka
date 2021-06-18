@@ -1,5 +1,10 @@
 #include <Arduino.h>
 
+/*
+ Jaka licencje na ten soft? 
+
+*/
+
 int pompa = 6;                                  // Pin do przekaznika
 int dioda = 13;                                 // Dioda testowa
 int czujnik_r1 = 5;                             // Pin odczytu czujnika ruchu przy wjezdzie
