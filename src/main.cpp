@@ -18,6 +18,8 @@ int czujnik_r2 = 4;                             // Pin odczytu czujnika wyjazdu 
 unsigned long odpalenie_pompy = 0;
 unsigned long czas_pracy_pompy = 5 * 1000;
 
+boolean pompa_stop_was_send = false;
+boolean pompa_start_was_send = false;
 boolean czujnik_r1_state = false;
 boolean czujnik_r2_state = false;
 int sekwencja = 0;
@@ -56,7 +58,11 @@ void set_pompa(){
   digitalWrite(pompa,HIGH);
   odpalenie_pompy = millis();
   #ifdef DEBUG
+  if(pompa_start_was_send == false){
     Serial.println("START POMPY");
+        pompa_stop_was_send = false;
+        pompa_start_was_send = true;    
+  }
   #endif
 }
 
@@ -65,7 +71,11 @@ void reset_pompa(){
   if (millis() >= praca_pompy_do){
     digitalWrite(pompa, LOW);
     #ifdef DEBUG
-      Serial.println("STOP POMPY");
+      if(pompa_stop_was_send == false){
+        Serial.println("STOP POMPY");
+        pompa_stop_was_send = true;
+        pompa_start_was_send = false;
+      }
     #endif
   }
 }
