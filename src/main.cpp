@@ -33,16 +33,14 @@ void setup() {
   //pinMode(dioda, OUTPUT);
 }
 
-void ledBlink()
-{
-  static unsigned int ledStatus = LOW;   // Last set LED mode.
-  static unsigned long ledBlinkTime = 0; // LED blink time.
+void ledBlink(){
+  int ledStatus = LOW;   // Last set LED mode.
+  unsigned long ledBlinkTime = 0; // LED blink time. @tidabek nie moze byc static bo po nim piszesz
 
   // LED blinking heartbeat. Yes, we are alive.
   // For explanation, see:
   // http://playground.arduino.cc/Code/TimingRollover
-  if ((long)(millis() - ledBlinkTime) >= 0)
-  {
+  if ((long)(millis() - ledBlinkTime) >= 0){
     // Toggle LED.
     ledStatus = (ledStatus == HIGH ? LOW : HIGH);
 
