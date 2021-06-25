@@ -17,6 +17,9 @@ int czujnik_r1 = 5;                             // Pin odczytu czujnika ruchu pr
 int czujnik_r2 = 4;                             // Pin odczytu czujnika wyjazdu 2
 unsigned long odpalenie_pompy = 0;
 unsigned long czas_pracy_pompy = 5 * 1000;
+boolean ledStatus = false;                            // Last set LED mode.
+unsigned long lastLedChange = 0;                 // LED blink time. @tidabek nie moze byc static bo po nim piszesz
+unsigned long ledInterval = 100;
 
 boolean pompa_stop_was_send = false;
 boolean pompa_start_was_send = false;
@@ -35,22 +38,19 @@ void setup() {
   //pinMode(dioda, OUTPUT);
 }
 
+// uruchamia heart-beat
 void ledBlink(){
-  int ledStatus = LOW;   // Last set LED mode.
-  unsigned long ledBlinkTime = 0; // LED blink time. @tidabek nie moze byc static bo po nim piszesz
-
-  // LED blinking heartbeat. Yes, we are alive.
-  // For explanation, see:
-  // http://playground.arduino.cc/Code/TimingRollover
-  if ((long)(millis() - ledBlinkTime) >= 0){
-    // Toggle LED.
-    ledStatus = (ledStatus == HIGH ? LOW : HIGH);
-
-    // Set LED pin status.
-    digitalWrite(LEDBLINK_PIN, ledStatus);
-
-    // Reset "next time to toggle" time.
-    ledBlinkTime = millis() + LEDBLINK_MS;
+  if (millis() - lastLedChange >= ledInterval){
+    if (ledStatus == true){
+      digitalWrite(LEDBLINK_PIN, HIGH);
+      ledInterval = 50;
+      ledStatus = false;
+    }else{
+      digitalWrite(LEDBLINK_PIN, LOW);
+      ledInterval = 3000;
+      ledStatus = true;
+    }
+      lastLedChange = millis();
   }
 } // End of ledBlink()
 
@@ -81,7 +81,8 @@ void reset_pompa(){
 }
 
 void loop() {
-  ledBlink(); // Blink the LED to let the user know we are still alive.
+  ledBlink(); 
+
   // test czujnika r1
   if(digitalRead(czujnik_r1) == LOW){
     delay(10);
