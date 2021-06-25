@@ -52,7 +52,7 @@ void ledBlink(){
     }
       lastLedChange = millis();
   }
-} // End of ledBlink()
+}
 
 void set_pompa(){
   digitalWrite(pompa,HIGH);
