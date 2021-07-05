@@ -47,7 +47,7 @@ void ledBlink(){
       ledStatus = false;
     }else{
       digitalWrite(LEDBLINK_PIN, LOW);
-      ledInterval = 3000;
+      ledInterval = 2500;
       ledStatus = true;
     }
       lastLedChange = millis();
